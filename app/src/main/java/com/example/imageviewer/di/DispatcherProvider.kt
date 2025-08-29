@@ -7,11 +7,13 @@ interface DispatcherProvider {
 
   fun io(): CoroutineDispatcher
   fun main(): CoroutineDispatcher
+  fun mainImmediate(): CoroutineDispatcher
   fun default(): CoroutineDispatcher
 
   class Default : DispatcherProvider {
     override fun io(): CoroutineDispatcher = Dispatchers.IO
     override fun main(): CoroutineDispatcher = Dispatchers.Main
+    override fun mainImmediate(): CoroutineDispatcher = Dispatchers.Main.immediate
     override fun default(): CoroutineDispatcher = Dispatchers.Default
   }
 }

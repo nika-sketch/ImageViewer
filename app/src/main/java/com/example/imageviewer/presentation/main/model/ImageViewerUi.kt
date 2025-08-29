@@ -1,7 +1,6 @@
 package com.example.imageviewer.presentation.main.model
 
 sealed class ImageViewerState {
-  object Initial : ImageViewerState()
   object Loading : ImageViewerState()
 
   data class Success(

@@ -13,5 +13,5 @@ fun ImagesViewerScreen(
   images: List<ImageViewerState.Success.ImageViewerUi>,
   onImageClick: (Int) -> Unit,
 ) {
-  Text(text = images.first().title, modifier = modifier.fillMaxSize(), textAlign = TextAlign.Center)
+  Text(text = images.first().toString(), modifier = modifier.fillMaxSize(), textAlign = TextAlign.Center)
 }

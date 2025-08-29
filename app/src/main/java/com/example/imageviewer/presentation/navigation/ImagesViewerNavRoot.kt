@@ -1,8 +1,8 @@
 package com.example.imageviewer.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entry
@@ -16,7 +16,6 @@ import com.example.imageviewer.di.DispatcherProvider
 import com.example.imageviewer.presentation.main.ImagesViewerScreen
 import com.example.imageviewer.presentation.main.ImagesViewerViewModel
 import com.example.imageviewer.presentation.main.model.ImageViewerState
-import com.example.imageviewer.presentation.main.model.ImageViewerState.Initial
 import com.example.imageviewer.presentation.main.model.ImageViewerState.Loading
 import com.example.imageviewer.presentation.main.model.ImageViewerState.Success
 import com.example.imageviewer.presentation.navigation.model.MainScreen
@@ -43,7 +42,7 @@ fun NavRoot(modifier: Modifier = Modifier) {
             )
           }
         )
-        val state = imagesViewerViewModel.imagesState.collectAsStateWithLifecycle()
+        val state = imagesViewerViewModel.imagesState.collectAsState()
         when (val state = state.value) {
           // TODO add error/loading screens
           is ImageViewerState.Error -> Unit
@@ -54,16 +53,8 @@ fun NavRoot(modifier: Modifier = Modifier) {
               // TODO navigate to detail and get current image by id
             }
           )
-
-          is Initial -> Unit
         }
       }
-//      entry<ImageDetail> { imageDetail ->
-//        ImageContent(
-//          title = imageDetail.title,
-//          imageUrl = imageDetail.imageUrl,
-//        )
-//      }
     }
   )
 }
