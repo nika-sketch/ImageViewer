@@ -8,5 +8,5 @@ import com.squareup.moshi.JsonClass
 data class ImageViewerApiModel(
   val id: Int,
   val title: String,
-  val url: String
+  val image: String
 )

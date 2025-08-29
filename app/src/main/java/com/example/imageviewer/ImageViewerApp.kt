@@ -9,12 +9,12 @@ import com.example.imageviewer.domain.repository.ImageViewerRepository
 class ImageViewerApp : Application() {
 
   companion object {
-    lateinit var formNestRepository: ImageViewerRepository
+    lateinit var imageViewerRepository: ImageViewerRepository
   }
 
   override fun onCreate() {
     super.onCreate()
-    formNestRepository = ImageViewerRepositoryImpl(
+    imageViewerRepository = ImageViewerRepositoryImpl(
       network = NetworkModule.NetworkModuleImpl().provideFormNestService(),
       dispatchers = DispatcherProvider.Default(),
     )

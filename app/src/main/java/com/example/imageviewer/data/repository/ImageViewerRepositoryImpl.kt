@@ -11,15 +11,15 @@ class ImageViewerRepositoryImpl(
   private val dispatchers: DispatcherProvider
 ) : ImageViewerRepository {
 
-  override suspend fun getImages(): List<ImageViewerDomain> {
-    return withContext(dispatchers.io()) {
+  override suspend fun getImages(): List<ImageViewerDomain> = withContext(dispatchers.io()) {
+    runCatching {
       val response = network.fetchImages()
       val body = response.body()
       if (response.isSuccessful && body != null) {
         body.map { apiModel ->
-          ImageViewerDomain(id = apiModel.id, title = apiModel.title, url = apiModel.url)
+          ImageViewerDomain(id = apiModel.id, title = apiModel.title, image = apiModel.image)
         }
       } else emptyList()
-    }
+    }.fold(onSuccess = { images -> images }, onFailure = { emptyList() })
   }
 }
