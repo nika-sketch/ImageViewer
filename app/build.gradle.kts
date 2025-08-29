@@ -24,7 +24,21 @@ android {
   }
 
   buildTypes {
+    debug {
+      buildConfigField("String", "IMAGE_VIEWER_BASE_URL", "\"https://mocki.io/v1/\"")
+      buildConfigField(
+        "String",
+        "FORM_NEST_ENDPOING",
+        "\"a399eb5c-25b7-4cea-bfa1-1d12cb1ba48f\""
+      )
+    }
     release {
+      buildConfigField("String", "IMAGE_VIEWER_BASE_URL", "\"https://mocki.io/v1/\"")
+      buildConfigField(
+        "String",
+        "FORM_NEST_ENDPOING",
+        "\"a399eb5c-25b7-4cea-bfa1-1d12cb1ba48f\""
+      )
       isMinifyEnabled = false
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -38,6 +52,7 @@ android {
   }
   buildFeatures {
     compose = true
+    buildConfig = true
   }
 }
 

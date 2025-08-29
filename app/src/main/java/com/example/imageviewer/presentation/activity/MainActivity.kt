@@ -1,4 +1,4 @@
-package com.example.imageviewer
+package com.example.imageviewer.presentation.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
