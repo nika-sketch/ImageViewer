@@ -27,7 +27,7 @@ import com.example.imageviewer.presentation.main.model.ImageViewerState
 @Composable
 fun ImagesViewerScreen(
   modifier: Modifier = Modifier,
-  onImageClick: (Int) -> Unit,
+  onImageClick: (String, String) -> Unit,
   onRefresh: () -> Unit,
   state: ImageViewerState,
 ) = when (state) {
@@ -72,7 +72,7 @@ private fun SuccessContent(
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   images: List<ImageViewerState.Success.ImageViewerUi>,
-  onImageClick: (Int) -> Unit,
+  onImageClick: (String, String) -> Unit,
 ) {
   PullToRefreshLazyColumn(
     items = images,
@@ -97,7 +97,7 @@ private fun SuccessContent(
 private fun ImageWithTitle(
   modifier: Modifier = Modifier,
   image: ImageViewerState.Success.ImageViewerUi,
-  onImageClick: (Int) -> Unit,
+  onImageClick: (String, String) -> Unit,
 ) {
   val model = ImageRequest.Builder(LocalContext.current)
     .data(image.url)
@@ -105,7 +105,7 @@ private fun ImageWithTitle(
     .build()
   Column(
     modifier = modifier.clickable {
-      onImageClick(image.id)
+      onImageClick(image.title, image.url)
     },
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center

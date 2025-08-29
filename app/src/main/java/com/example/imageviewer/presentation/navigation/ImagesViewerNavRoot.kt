@@ -13,8 +13,10 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.navigation3.ui.rememberSceneSetupNavEntryDecorator
 import com.example.imageviewer.ImageViewerApp
 import com.example.imageviewer.di.DispatcherProvider
+import com.example.imageviewer.presentation.detail.ImageDetailContentScreen
 import com.example.imageviewer.presentation.main.ImagesViewerScreen
 import com.example.imageviewer.presentation.main.ImagesViewerViewModel
+import com.example.imageviewer.presentation.navigation.model.ImageDetail
 import com.example.imageviewer.presentation.navigation.model.MainScreen
 import com.example.imageviewer.shared.viewModelFactory
 
@@ -42,8 +44,16 @@ fun NavRoot(modifier: Modifier = Modifier) {
         val state = imagesViewerViewModel.imagesState.collectAsStateWithLifecycle()
         ImagesViewerScreen(
           state = state.value,
-          onImageClick = { imageId -> },
+          onImageClick = { title, url -> backStack.add(ImageDetail(title = title, url = url)) },
           onRefresh = imagesViewerViewModel::refresh
+        )
+      }
+
+      entry<ImageDetail> { imageDetail ->
+        ImageDetailContentScreen(
+          modifier = Modifier,
+          title = imageDetail.title,
+          url = imageDetail.url
         )
       }
     }
