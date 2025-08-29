@@ -1,8 +1,8 @@
 package com.example.imageviewer.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entry
@@ -42,7 +42,7 @@ fun NavRoot(modifier: Modifier = Modifier) {
             )
           }
         )
-        val state = imagesViewerViewModel.imagesState.collectAsState()
+        val state = imagesViewerViewModel.imagesState.collectAsStateWithLifecycle()
         when (val state = state.value) {
           // TODO add error/loading screens
           is ImageViewerState.Error -> Unit

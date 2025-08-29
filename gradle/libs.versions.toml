@@ -17,8 +17,8 @@ okhttp = "4.12.0"
 ksp = "2.2.0-2.0.2"
 
 # Navigation 3 libraries
-nav3Core = "1.0.0-alpha08"
-lifecycleViewmodelNav3 = "1.0.0-alpha04"
+navigation3 = "1.0.0-alpha07"
+lifecycleViewmodel = "1.0.0-SNAPSHOT"
 kotlinSerialization = "2.1.21"
 kotlinxSerializationCore = "1.8.1"
 
@@ -46,11 +46,11 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 
 # Core Navigation 3 libraries
-androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
-androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodel" }
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 
 # Optional add-on libraries
-androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
 
 
