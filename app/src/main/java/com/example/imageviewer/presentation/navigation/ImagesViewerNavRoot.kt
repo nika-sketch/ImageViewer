@@ -15,9 +15,6 @@ import com.example.imageviewer.ImageViewerApp
 import com.example.imageviewer.di.DispatcherProvider
 import com.example.imageviewer.presentation.main.ImagesViewerScreen
 import com.example.imageviewer.presentation.main.ImagesViewerViewModel
-import com.example.imageviewer.presentation.main.model.ImageViewerState
-import com.example.imageviewer.presentation.main.model.ImageViewerState.Loading
-import com.example.imageviewer.presentation.main.model.ImageViewerState.Success
 import com.example.imageviewer.presentation.navigation.model.MainScreen
 import com.example.imageviewer.shared.viewModelFactory
 
@@ -43,17 +40,10 @@ fun NavRoot(modifier: Modifier = Modifier) {
           }
         )
         val state = imagesViewerViewModel.imagesState.collectAsStateWithLifecycle()
-        when (val state = state.value) {
-          // TODO add error/loading screens
-          is ImageViewerState.Error -> Unit
-          is Loading -> Unit
-          is Success -> ImagesViewerScreen(
-            images = state.images,
-            onImageClick = { imageId ->
-              // TODO navigate to detail and get current image by id
-            }
-          )
-        }
+        ImagesViewerScreen(
+          state = state.value,
+          onImageClick = { imageId -> },
+        )
       }
     }
   )
