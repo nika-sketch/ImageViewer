@@ -5,6 +5,10 @@ plugins {
   alias(libs.plugins.google.devtools.ksp)
 }
 
+kotlin {
+  jvmToolchain(11)
+}
+
 android {
   namespace = "com.example.imageviewer"
   compileSdk = 36
@@ -31,9 +35,6 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
-  }
-  kotlinOptions {
-    jvmTarget = "11"
   }
   buildFeatures {
     compose = true
