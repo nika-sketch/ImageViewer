@@ -43,6 +43,7 @@ fun NavRoot(modifier: Modifier = Modifier) {
         ImagesViewerScreen(
           state = state.value,
           onImageClick = { imageId -> },
+          onRefresh = imagesViewerViewModel::refresh
         )
       }
     }

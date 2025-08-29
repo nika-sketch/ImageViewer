@@ -1,5 +1,6 @@
 package com.example.imageviewer.presentation.main
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,9 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,21 +29,24 @@ import com.example.imageviewer.presentation.main.model.ImageViewerState
 fun ImagesViewerScreen(
   modifier: Modifier = Modifier,
   onImageClick: (Int) -> Unit,
+  onRefresh: () -> Unit,
   state: ImageViewerState,
-) {
-  when (state) {
-    is ImageViewerState.Error -> ErrorContent()
+) = AnimatedContent(targetState = state) { currentState ->
+  when (currentState) {
     is ImageViewerState.Loading -> LoadingContent()
+    is ImageViewerState.Error -> ErrorContent(message = currentState.message)
     is ImageViewerState.Success -> SuccessContent(
+      isRefreshing = currentState.isRefreshing,
       modifier = modifier,
-      images = state.images,
-      onImageClick = onImageClick
+      images = currentState.images,
+      onImageClick = onImageClick,
+      onRefresh = onRefresh
     )
   }
 }
 
 @Composable
-private fun ErrorContent(modifier: Modifier = Modifier) {
+private fun ErrorContent(modifier: Modifier = Modifier, message: String) {
   Box(
     modifier = modifier
       .fillMaxSize()
@@ -51,7 +54,7 @@ private fun ErrorContent(modifier: Modifier = Modifier) {
       .padding(16.dp),
     contentAlignment = Alignment.Center
   ) {
-    Text(text = "An error occurred. Please try again.")
+    Text(text = message)
   }
 }
 
@@ -65,22 +68,32 @@ private fun LoadingContent(modifier: Modifier = Modifier) {
   }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SuccessContent(
   modifier: Modifier = Modifier,
+  isRefreshing: Boolean,
+  onRefresh: () -> Unit,
   images: List<ImageViewerState.Success.ImageViewerUi>,
   onImageClick: (Int) -> Unit,
 ) {
-  LazyColumn(modifier = modifier) {
-    itemsIndexed(
-      items = images,
-      key = { index, image -> image.id }
-    ) { index, image ->
-      ImageWithTitle(image = image, modifier = Modifier.fillMaxSize(), onImageClick = onImageClick)
+  PullToRefreshLazyColumn(
+    items = images,
+    content = { image ->
+      ImageWithTitle(
+        image = image,
+        modifier = Modifier.fillMaxSize(),
+        onImageClick = onImageClick
+      )
+    },
+    dividerContent = { index ->
       if (index != images.lastIndex)
         HorizontalDivider(thickness = 2.dp, modifier = Modifier.padding(horizontal = 8.dp))
-    }
-  }
+    },
+    isRefreshing = isRefreshing,
+    onRefresh = onRefresh,
+    modifier = modifier
+  )
 }
 
 @Composable

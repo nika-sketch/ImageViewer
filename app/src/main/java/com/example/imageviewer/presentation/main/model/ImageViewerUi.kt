@@ -4,7 +4,8 @@ sealed class ImageViewerState {
   object Loading : ImageViewerState()
 
   data class Success(
-    val images: List<ImageViewerUi>
+    val images: List<ImageViewerUi>,
+    val isRefreshing: Boolean,
   ) : ImageViewerState() {
     data class ImageViewerUi(
       val id: Int,
