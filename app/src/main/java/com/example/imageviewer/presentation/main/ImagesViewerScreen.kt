@@ -1,6 +1,5 @@
 package com.example.imageviewer.presentation.main
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,18 +30,16 @@ fun ImagesViewerScreen(
   onImageClick: (Int) -> Unit,
   onRefresh: () -> Unit,
   state: ImageViewerState,
-) = AnimatedContent(targetState = state) { currentState ->
-  when (currentState) {
-    is ImageViewerState.Loading -> LoadingContent()
-    is ImageViewerState.Error -> ErrorContent(message = currentState.message)
-    is ImageViewerState.Success -> SuccessContent(
-      isRefreshing = currentState.isRefreshing,
-      modifier = modifier,
-      images = currentState.images,
-      onImageClick = onImageClick,
-      onRefresh = onRefresh
-    )
-  }
+) = when (state) {
+  is ImageViewerState.Loading -> LoadingContent()
+  is ImageViewerState.Error -> ErrorContent(message = state.message)
+  is ImageViewerState.Success -> SuccessContent(
+    isRefreshing = state.isRefreshing,
+    modifier = modifier,
+    images = state.images,
+    onImageClick = onImageClick,
+    onRefresh = onRefresh
+  )
 }
 
 @Composable

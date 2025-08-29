@@ -34,8 +34,7 @@ fun <T> PullToRefreshLazyColumn(
     LazyColumn(
       state = lazyListState,
       contentPadding = PaddingValues(8.dp),
-      modifier = Modifier
-        .fillMaxSize(),
+      modifier = Modifier.fillMaxSize(),
       verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
       itemsIndexed(items, key = { index, item -> index }) { index, it ->

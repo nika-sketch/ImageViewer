@@ -9,7 +9,6 @@ import com.example.imageviewer.presentation.main.model.ImageViewerState.Error
 import com.example.imageviewer.presentation.main.model.ImageViewerState.Loading
 import com.example.imageviewer.presentation.main.model.ImageViewerState.Success
 import com.example.imageviewer.presentation.main.model.ImageViewerState.Success.ImageViewerUi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +36,6 @@ class ImagesViewerViewModel(
           mutableImagesState.value = Loading
         } else {
           mutableImagesState.value = currentState.copy(isRefreshing = true)
-          delay(100L)
         }
         val imagesDomain = repository.getImages()
         withContext(dispatchers.mainImmediate()) {
