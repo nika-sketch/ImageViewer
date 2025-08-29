@@ -32,19 +32,13 @@ class ImagesViewerViewModel(
     viewModelScope.launch {
       triggerRefreshFlow.collectLatest {
         val currentState = imagesState.value
-        if (currentState !is Success) {
-          mutableImagesState.value = Loading
-        } else {
-          mutableImagesState.value = currentState.copy(isRefreshing = true)
-        }
+        if (currentState !is Success) mutableImagesState.value = Loading
+        else mutableImagesState.value = currentState.copy(isRefreshing = true)
+
         val imagesDomain = repository.getImages()
         withContext(dispatchers.mainImmediate()) {
           val imagesUi = imagesDomain.map { imageDomain ->
-            ImageViewerUi(
-              id = imageDomain.id,
-              title = imageDomain.title,
-              url = imageDomain.image
-            )
+            ImageViewerUi(id = imageDomain.id, title = imageDomain.title, url = imageDomain.image)
           }
           mutableImagesState.value = if (imagesUi.isEmpty()) {
             Error(message = "No images found")
