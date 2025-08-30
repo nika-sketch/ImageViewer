@@ -19,11 +19,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun <T> PullToRefreshLazyColumn(
   items: List<T>,
-  content: @Composable (T) -> Unit,
+  content: @Composable (T, Int) -> Unit,
   isRefreshing: Boolean,
   onRefresh: () -> Unit,
   modifier: Modifier = Modifier,
-  dividerContent: @Composable (Int) -> Unit = {},
   lazyListState: LazyListState = rememberLazyListState()
 ) {
   PullToRefreshBox(
@@ -38,8 +37,7 @@ fun <T> PullToRefreshLazyColumn(
       verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
       itemsIndexed(items, key = { index, item -> index }) { index, it ->
-        content(it)
-        dividerContent(index)
+        content(it, index)
       }
     }
   }

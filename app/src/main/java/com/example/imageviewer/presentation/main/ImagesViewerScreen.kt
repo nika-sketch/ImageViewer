@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -29,10 +31,11 @@ fun ImagesViewerScreen(
   modifier: Modifier = Modifier,
   onImageClick: (String, String) -> Unit,
   onRefresh: () -> Unit,
+  onButtonClick: () -> Unit,
   state: ImageViewerState,
 ) = when (state) {
   is ImageViewerState.Loading -> LoadingContent()
-  is ImageViewerState.Error -> ErrorContent(message = state.message)
+  is ImageViewerState.Error -> ErrorContent(message = state.message, onClick = onButtonClick)
   is ImageViewerState.Success -> SuccessContent(
     isRefreshing = state.isRefreshing,
     modifier = modifier,
@@ -43,15 +46,21 @@ fun ImagesViewerScreen(
 }
 
 @Composable
-private fun ErrorContent(modifier: Modifier = Modifier, message: String) {
+private fun ErrorContent(
+  modifier: Modifier = Modifier,
+  message: String,
+  onClick: () -> Unit
+) {
   Box(
     modifier = modifier
-      .fillMaxSize()
+      .fillMaxWidth()
       .wrapContentSize(Alignment.Center)
       .padding(16.dp),
     contentAlignment = Alignment.Center
   ) {
-    Text(text = message)
+    Button(onClick = onClick) {
+      Text(text = message)
+    }
   }
 }
 
@@ -76,16 +85,16 @@ private fun SuccessContent(
 ) {
   PullToRefreshLazyColumn(
     items = images,
-    content = { image ->
+    content = { image, index ->
       ImageWithTitle(
         image = image,
         modifier = Modifier.fillMaxSize(),
         onImageClick = onImageClick
       )
-    },
-    dividerContent = { index ->
-      if (index != images.lastIndex)
-        HorizontalDivider(thickness = 2.dp, modifier = Modifier.padding(horizontal = 8.dp))
+      if (index != images.lastIndex) HorizontalDivider(
+        thickness = 1.5.dp,
+        modifier = Modifier.padding(horizontal = 8.dp)
+      )
     },
     isRefreshing = isRefreshing,
     onRefresh = onRefresh,

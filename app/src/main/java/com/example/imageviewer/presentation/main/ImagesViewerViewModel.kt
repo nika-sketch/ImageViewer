@@ -50,7 +50,5 @@ class ImagesViewerViewModel(
     }
   }
 
-  fun refresh() {
-    triggerRefreshFlow.tryEmit(Unit)
-  }
+  fun refresh() = triggerRefreshFlow.tryEmit(Unit)
 }

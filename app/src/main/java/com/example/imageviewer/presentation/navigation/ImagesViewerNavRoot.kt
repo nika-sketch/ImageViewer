@@ -45,7 +45,8 @@ fun NavRoot(modifier: Modifier = Modifier) {
         ImagesViewerScreen(
           state = state.value,
           onImageClick = { title, url -> backStack.add(ImageDetail(title = title, url = url)) },
-          onRefresh = imagesViewerViewModel::refresh
+          onRefresh = imagesViewerViewModel::refresh,
+          onButtonClick = imagesViewerViewModel::refresh,
         )
       }
 
