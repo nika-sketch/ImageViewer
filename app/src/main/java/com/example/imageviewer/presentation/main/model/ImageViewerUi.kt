@@ -1,7 +1,8 @@
 package com.example.imageviewer.presentation.main.model
 
 sealed class ImageViewerState {
-  object Loading : ImageViewerState()
+
+  data object Loading : ImageViewerState()
 
   data class Success(
     val images: List<ImageViewerUi>,
