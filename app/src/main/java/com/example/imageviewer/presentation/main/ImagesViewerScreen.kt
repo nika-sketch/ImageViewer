@@ -11,8 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.imageviewer.presentation.main.model.ImageViewerState
+import com.example.imageviewer.shared.shimmer
 
 @Composable
 fun ImagesViewerScreen(
@@ -66,11 +68,27 @@ private fun ErrorContent(
 
 @Composable
 private fun LoadingContent(modifier: Modifier = Modifier) {
-  Box(
-    modifier = modifier.fillMaxSize(),
-    contentAlignment = Alignment.Center
+  Column(
+    modifier = Modifier.verticalScroll(rememberScrollState())
   ) {
-    CircularProgressIndicator()
+    repeat(10) {
+      Column {
+        Box(
+          modifier = modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .height(300.dp)
+            .shimmer(),
+        )
+        Box(
+          modifier = modifier
+            .padding(32.dp)
+            .fillMaxWidth()
+            .height(16.dp)
+            .shimmer(),
+        )
+      }
+    }
   }
 }
 
