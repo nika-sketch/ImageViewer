@@ -10,7 +10,7 @@ A simple sample app showcasing an image viewer built using [Jetpack Compose](htt
 
 ## Requirements
 
-- Android Studio Arctic Fox or newer
+- Android Studio Narwhal Fox or newer
 - Kotlin 2.0+
 - Jetpack Compose 1.8+ (check `build.gradle.kts` for exact version)
 
